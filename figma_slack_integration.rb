@@ -5,7 +5,7 @@ require 'json'
 
 Dir[File.join(__dir__, 'lib', '*.rb')].each do |file|
   require file
-  also_reload file
+  also_reload file if development?
 end
 
 helpers do
