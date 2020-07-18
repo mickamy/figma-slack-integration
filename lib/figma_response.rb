@@ -4,7 +4,7 @@ module FigmaResponse
                 :comment_id,
                 :file_key,
                 :file_name,
-                :mentions,
+                :is_reply,
                 :triggered_by
 
     def initialize(hash)
@@ -12,11 +12,12 @@ module FigmaResponse
       @comment_id = hash[:comment_id]
       @file_key = hash[:file_key]
       @file_name = hash[:file_name]
+      @is_reply = !hash[:parent_id].empty?
       @triggered_by = hash[:triggered_by][:handle]
     end
 
     def message
-      "#{triggered_by} commented on #{file_name}"
+      is_reply ? "#{triggered_by} replied to a comment on #{file_name}" : "#{triggered_by} commented on #{file_name}"
     end
 
     def url
