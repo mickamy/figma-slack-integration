@@ -5,7 +5,6 @@ module FigmaResponse
                 :file_key,
                 :file_name,
                 :mentions,
-                :passcode,
                 :triggered_by
 
     def initialize(hash)
@@ -13,7 +12,6 @@ module FigmaResponse
       @comment_id = hash[:comment_id]
       @file_key = hash[:file_key]
       @file_name = hash[:file_name]
-      @passcode = hash[:passcode]
       @triggered_by = hash[:triggered_by][:handle]
     end
 

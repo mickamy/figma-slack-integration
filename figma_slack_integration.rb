@@ -12,6 +12,14 @@ helpers do
   def slack_client
     SlackClient.new(url: ENV['SLACK_WEBHOOK_URL'])
   end
+
+  def protect!(passcode)
+    forbid! unless passcode == ENV['PASSCODE']
+  end
+
+  def forbid!
+    throw(:halt, [401, "Not Authorized\n"])
+  end
 end
 
 get '/' do
@@ -21,6 +29,8 @@ end
 post '/file/comment' do
   body = request.body.read
   hash = JSON.parse(body, symbolize_names: true)
+  protect!(hash[:passcode])
+
   response = FigmaResponse::FileComment.new(hash)
   slack_client.post(response.markdown)
 end
