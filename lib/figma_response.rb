@@ -25,6 +25,10 @@ module FigmaResponse
       "https://figma.com/file/#{file_key}?utm_content=file_comment##{comment_id}"
     end
 
+    def markdown
+      message.gsub(file_name, "<#{url}|#{file_name}>")
+    end
+
     private
 
     def parse(comment:, mentions:)

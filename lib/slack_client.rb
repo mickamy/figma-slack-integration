@@ -6,8 +6,14 @@ class SlackClient
     @url = url
   end
 
-  def post(text)
-    body = { text: text }.to_json
+  def post(markdown)
+    body = {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: markdown,
+      }
+     }.to_json
     res = client.post(url, body, content_type: 'application/json')
     [res.status, res.headers, res.body]
   end
