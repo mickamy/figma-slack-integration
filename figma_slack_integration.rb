@@ -1,7 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'dotenv/load' if development?
-require './lib/slack_client'
+
+Dir[File.join(__dir__, 'lib', '*.rb')].each do |file|
+  require file
+  also_reload file
+end
 
 helpers do
   def slack_client
