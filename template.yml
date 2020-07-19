@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+
+Resources:
+  FSIFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: FSIApp
+      Handler: lambda.handler
+      Runtime: ruby2.7
+      CodeUri: "./"
+      MemorySize: 512
+      Timeout: 30
+      Events:
+        FSIApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+            RestApiId: !Ref FSIAPI
+  FSIAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: FSIAPI
+      StageName: Prod
+      DefinitionBody:
+        swagger: "2.0"
+        basePath: "/Prod"
+        info:
+          title: !Ref AWS::StackName
+        paths:
+          /{proxy+}:
+            x-amazon-apigateway-any-method:
+              responses: {}
+              x-amazon-apigateway-integration:
+                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FSIFunction.Arn}/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: POST
+                type: "aws_proxy"
+          /:
+            get:
+              responses: {}
+              x-amazon-apigateway-integration:
+                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FSIFunction.Arn}/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: POST
+                type: "aws_proxy"
+  ConfigLambdaPermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn:
+      - FSIFunction
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref FSIFunction
+      Principal: apigateway.amazonaws.com
+Outputs:
+  FSIAppUrl:
+    Description: App endpoint URL
+    Value: !Sub "https://${FSIAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
