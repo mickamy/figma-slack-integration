@@ -1,3 +1,3 @@
-require_relative './figma_slack_integration'
+require_relative './app'
 
 run Sinatra::Application
