@@ -31,7 +31,7 @@ post '/file/comment' do
   hash = JSON.parse(body, symbolize_names: true)
   protect!(hash[:passcode])
 
-  response = FigmaResponse::FileComment.new(hash)
+  response = FigmaBody::FileComment.new(hash)
   slack_client.post(response.markdown)
 end
 
@@ -40,6 +40,6 @@ post '/debug/file/comment' do
   hash = JSON.parse(body, symbolize_names: true)
   protect!(hash[:passcode])
 
-  response = FigmaResponse::FileComment.new(hash)
+  response = FigmaBody::FileComment.new(hash)
   response.markdown
 end

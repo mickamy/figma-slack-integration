@@ -1,4 +1,4 @@
-module FigmaResponse
+module FigmaBody
   class FileComment
     attr_reader :comment_text,
                 :comment_id,
