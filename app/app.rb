@@ -18,7 +18,8 @@ helpers do
   end
 
   def forbid!
-    throw(:halt, [401, "Not Authorized\n"])
+    # do not return 401 to protect from brute force attack
+    throw(:halt, 200)
   end
 end
 
@@ -33,13 +34,4 @@ post '/file/comment' do
 
   comment = FigmaBody::FileComment.new(hash)
   slack_client.post(message: comment.message, content: comment.content)
-end
-
-post '/debug/file/comment' do
-  body = request.body.read
-  hash = JSON.parse(body, symbolize_names: true)
-  protect!(hash[:passcode])
-
-  comment = FigmaBody::FileComment.new(hash)
-  { message: comment.message, content: comment.content }.to_json
 end
