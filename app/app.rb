@@ -18,7 +18,8 @@ helpers do
   end
 
   def forbid!
-    throw(:halt, [401, "Not Authorized\n"])
+    # do not return 401 to protect from brute force attack
+    throw(:halt, 200)
   end
 end
 
