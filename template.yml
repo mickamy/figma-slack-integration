@@ -18,6 +18,10 @@ Resources:
             Path: /
             Method: ANY
             RestApiId: !Ref FSIAPI
+      Environments:
+        Variables:
+          SLACK_WEBHOOK_URL: { YOUR_SLACK_WEBHOOK_URL }
+          PASSCODE: { YOUR_PASSCODE }
   FSIAPI:
     Type: AWS::Serverless::Api
     Properties:

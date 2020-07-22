@@ -4,6 +4,14 @@ Post message to Slack when someone comments on a Figma file
 
 ## How to deploy
 
+Before deploying, check if you replaced environment variables in `template.yml`.
+Following environment variables should to be updated.
+
+- SLACK_WEBHOOK_URL
+- PASSCODE
+
+Then just hit command...
+
 ```
 $ aws cloudformation package \
     --template-file template.yml \
