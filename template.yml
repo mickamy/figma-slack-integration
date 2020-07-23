@@ -1,6 +1,14 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 
+Parameters:
+  SlackWebhookUrl:
+    Type: String
+    Description: Slack incoming Webhook URL
+  Passcode:
+    Type: String
+    Description: Passcode sent from Figma Webhook
+
 Resources:
   FSIFunction:
     Type: "AWS::Serverless::Function"
@@ -18,10 +26,10 @@ Resources:
             Path: /
             Method: ANY
             RestApiId: !Ref FSIAPI
-      Environments:
+      Environment:
         Variables:
-          SLACK_WEBHOOK_URL: { YOUR_SLACK_WEBHOOK_URL }
-          PASSCODE: { YOUR_PASSCODE }
+          SLACK_WEBHOOK_URL: !Ref SlackWebhookUrl
+          PASSCODE: !Ref Passcode
   FSIAPI:
     Type: AWS::Serverless::Api
     Properties:

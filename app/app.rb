@@ -21,6 +21,11 @@ helpers do
     # do not return 401 to protect from brute force attack
     throw(:halt, 200)
   end
+
+  def hash_body
+    body = request.body.read
+    JSON.parse(body, symbolize_names: true)
+  end
 end
 
 get '/' do
@@ -28,10 +33,19 @@ get '/' do
 end
 
 post '/file/comment' do
-  body = request.body.read
-  hash = JSON.parse(body, symbolize_names: true)
-  protect!(hash[:passcode])
+  body = hash_body
+  protect!(body[:passcode])
 
-  comment = FigmaBody::FileComment.new(hash)
+  comment = FigmaBody::FileComment.new(body)
   slack_client.post(message: comment.message, content: comment.content)
+end
+
+if development?
+  post '/file/comment/debug' do
+    body = hash_body
+    protect!(body[:passcode])
+
+    comment = FigmaBody::FileComment.new(body)
+    { message: comment.message, content: comment.content }.to_json
+  end
 end
