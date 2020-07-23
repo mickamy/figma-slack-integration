@@ -4,15 +4,9 @@ Post message to Slack when someone comments on a Figma file
 
 ## How to deploy
 
-Before deploying, check if you replaced environment variables in `template.yml`.
-Following environment variables should to be updated.
-
-- SLACK_WEBHOOK_URL
-- PASSCODE
-
-Then just hit command...
-
 ```
+$ bundle install --deployment
+
 $ aws cloudformation package \
     --template-file template.yml \
     --output-template-file serverless-output.yml \
@@ -21,5 +15,6 @@ $ aws cloudformation package \
 $ aws cloudformation deploy \
     --template-file serverless-output.yml \
     --stack-name FSIFunction \
-    --capabilities CAPABILITY_IAM
+    --capabilities CAPABILITY_IAM \
+    --parameter-overrides SlackWebhookUrl={ SLACK_WEBHOOK_URL } Passcode={ PASSCODE }
 ```
