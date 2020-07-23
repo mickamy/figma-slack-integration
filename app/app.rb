@@ -39,3 +39,13 @@ post '/file/comment' do
   comment = FigmaBody::FileComment.new(body)
   slack_client.post(message: comment.message, content: comment.content)
 end
+
+if development?
+  post '/file/comment/debug' do
+    body = hash_body
+    protect!(body[:passcode])
+
+    comment = FigmaBody::FileComment.new(body)
+    { message: comment.message, content: comment.content }.to_json
+  end
+end
