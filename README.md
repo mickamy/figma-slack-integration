@@ -4,6 +4,8 @@ Post message to Slack when someone comments on a Figma file
 
 ## How to deploy
 
+Assume you have installed ruby 2.7.0 or newer.
+
 ```
 $ bundle install --deployment
 
