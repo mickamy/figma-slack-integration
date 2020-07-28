@@ -22,7 +22,7 @@ module FigmaBody
     end
 
     def content
-      "> #{content_text}"
+      "> #{content_text.gsub("\n", "\n> ")}"
     end
 
     private
