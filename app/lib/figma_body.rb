@@ -29,7 +29,13 @@ module FigmaBody
 
     def parse(comment:, mentions:)
       comment.map do |item|
-        item[:text] || mentions.find { |mention| mention[:id] == item[:mention] }[:handle] + ' '
+        text = item[:text]
+        if text.nil?
+          handle = mentions.find { |mention| mention[:id] == item[:mention] }[:handle]
+          "@#{handle} "
+        else
+          text
+        end
       end.join
     end
 
