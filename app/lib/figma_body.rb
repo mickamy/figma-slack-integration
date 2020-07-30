@@ -32,7 +32,7 @@ module FigmaBody
         text = item[:text]
         if text.nil?
           handle = mentions.find { |mention| mention[:id] == item[:mention] }[:handle]
-          "@#{handle} "
+          "@#{handle}"
         else
           text
         end
