@@ -13,7 +13,7 @@ module FigmaBody
       @id = hash[:comment_id]
       @file_key = hash[:file_key]
       @file_name = hash[:file_name]
-      @parent_id = !hash[:parent_id]
+      @parent_id = hash[:parent_id]
       @triggered_by = hash[:triggered_by][:handle]
       @resolved_at = hash[:resolved_at]
     end
@@ -39,7 +39,7 @@ module FigmaBody
     end
 
     def resolved?
-      !resolved_at.nil?
+      !resolved_at.empty?
     end
 
     def parse(comment:, mentions:)
