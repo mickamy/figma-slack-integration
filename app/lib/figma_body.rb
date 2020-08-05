@@ -39,7 +39,7 @@ module FigmaBody
     end
 
     def resolved?
-      !resolved_at.empty?
+      !resolved_at.nil?
     end
 
     def parse(comment:, mentions:)
