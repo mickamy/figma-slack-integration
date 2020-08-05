@@ -5,6 +5,7 @@ module FigmaBody
                 :file_key,
                 :file_name,
                 :parent_id,
+                :resolved_at,
                 :triggered_by
 
     def initialize(hash)
@@ -14,10 +15,16 @@ module FigmaBody
       @file_name = hash[:file_name]
       @parent_id = !hash[:parent_id]
       @triggered_by = hash[:triggered_by][:handle]
+      @resolved_at = hash[:resolved_at]
     end
 
     def message
-      text = reply? ? "#{triggered_by} replied to a comment on #{file_name}" : "#{triggered_by} commented on #{file_name}"
+      text = ''
+      if resolved?
+        text = "#{triggered_by} resolved or replied to a comment on #{file_name}"
+      else
+        text = reply? ? "#{triggered_by} replied to a comment on #{file_name}" : "#{triggered_by} commented on #{file_name}"
+      end
       text.gsub(file_name, "<#{url}|#{file_name}>")
     end
 
@@ -29,6 +36,10 @@ module FigmaBody
 
     def reply?
       !parent_id.empty?
+    end
+
+    def resolved?
+      !resolved_at.empty?
     end
 
     def parse(comment:, mentions:)
