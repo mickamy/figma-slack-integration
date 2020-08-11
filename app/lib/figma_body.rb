@@ -21,7 +21,7 @@ module FigmaBody
     def message
       text = ''
       if resolved?
-        text = reply? ? "#{triggered_by} replied to a resolved comment on #{file_name}" : "#{triggered_by} resolved a comment on #{file_name}"
+        text = reply? ? "#{triggered_by} replied to a resolved comment on #{file_name}" : "Someone resolved a comment by #{triggered_by} on #{file_name}"
       else
         text = reply? ? "#{triggered_by} replied to a comment on #{file_name}" : "#{triggered_by} commented on #{file_name}"
       end
