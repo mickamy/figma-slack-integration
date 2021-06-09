@@ -1,13 +1,26 @@
 # figma-slack-integration
 
-Post message to Slack channel when someone comments on a Figma file
+Post message to Slack channel when someone comments on a Figma file.
+It uses figma webhook V2.
+See docs for details.
+https://www.figma.com/developers/api#webhooks_v2
 
 ## How to deploy
 
 Assume you have installed ruby 2.7.0 or newer.
 
 ```
-$ bundle install --deployment
+# Register your figma webhook
+$ curl -X POST \
+	-H 'X-FIGMA-TOKEN: <personal access token>' \
+	-H "Content-Type: application/json" \
+	'https://api.figma.com/v2/webhooks' \
+	-d '{ \
+		"event_type":"FILE_COMMENT", \
+		"team_id":"TEAM_ID", \
+		"endpoint":"YOUR_LAMBDA_ENDPOINT", \
+		passcode":"PASSCODE"
+	}'
 
 $ aws cloudformation package \
     --template-file template.yml \
