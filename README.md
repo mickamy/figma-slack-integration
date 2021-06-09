@@ -19,7 +19,7 @@ $ curl -X POST \
 		"event_type":"FILE_COMMENT", \
 		"team_id":"<TEAM_ID>", \
 		"endpoint":"<LAMBDA_ENDPOINT>", \
-		passcode":"<PASSCODE>"
+		passcode":"<PASSCODE>" \
 	}'
 
 $ aws cloudformation package \
