@@ -12,14 +12,14 @@ Assume you have installed ruby 2.7.0 or newer.
 ```
 # Register your figma webhook
 $ curl -X POST \
-	-H 'X-FIGMA-TOKEN: <personal access token>' \
+	-H 'X-FIGMA-TOKEN: <PERSONAL_ACCESS_TOKEN>' \
 	-H "Content-Type: application/json" \
 	'https://api.figma.com/v2/webhooks' \
 	-d '{ \
 		"event_type":"FILE_COMMENT", \
-		"team_id":"TEAM_ID", \
-		"endpoint":"YOUR_LAMBDA_ENDPOINT", \
-		passcode":"PASSCODE"
+		"team_id":"<TEAM_ID>", \
+		"endpoint":"<LAMBDA_ENDPOINT>", \
+		passcode":"<PASSCODE>"
 	}'
 
 $ aws cloudformation package \
