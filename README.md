@@ -1,6 +1,6 @@
 # figma-slack-integration
 
-Post message to Slack when someone comments on a Figma file
+Post message to Slack channel when someone comments on a Figma file
 
 ## How to deploy
 
